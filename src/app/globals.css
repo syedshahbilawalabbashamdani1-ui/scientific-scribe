@@ -1,26 +1,104 @@
 @import "tailwindcss";
 
+@theme inline {
+  --color-navy-50: #f0f4f8;
+  --color-navy-100: #d9e2ec;
+  --color-navy-200: #bcccdc;
+  --color-navy-300: #9fb3c8;
+  --color-navy-400: #829ab1;
+  --color-navy-500: #627d98;
+  --color-navy-600: #486581;
+  --color-navy-700: #334e68;
+  --color-navy-800: #243b53;
+  --color-navy-900: #102a43;
+  --color-navy-950: #0a1929;
+
+  --color-teal-50: #e0fcff;
+  --color-teal-100: #bef8fd;
+  --color-teal-200: #87eaf2;
+  --color-teal-300: #54d1db;
+  --color-teal-400: #38bec9;
+  --color-teal-500: #2cb1bc;
+  --color-teal-600: #14919b;
+  --color-teal-700: #0e7c86;
+  --color-teal-800: #0a6c74;
+  --color-teal-900: #044e54;
+  --color-teal-950: #023034;
+
+  --color-accent: #2cb1bc;
+  --color-accent-hover: #14919b;
+
+  --font-serif: "Georgia", "Times New Roman", serif;
+  --font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #102a43;
+  --card: #f0f4f8;
+  --card-foreground: #102a43;
+  --muted: #d9e2ec;
+  --muted-foreground: #627d98;
+  --border: #d9e2ec;
+  --input: #d9e2ec;
+  --ring: #2cb1bc;
+  --destructive: #dc2626;
+}
+
+.dark {
+  --background: #0a1929;
+  --foreground: #d9e2ec;
+  --card: #102a43;
+  --card-foreground: #d9e2ec;
+  --muted: #243b53;
+  --muted-foreground: #829ab1;
+  --border: #243b53;
+  --input: #243b53;
+  --ring: #38bec9;
+  --destructive: #ef4444;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--border);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: white;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
