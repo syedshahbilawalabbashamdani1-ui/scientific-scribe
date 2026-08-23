@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   },
   description:
     "Professional academic and medical writing services. Research articles, meta-analyses, systematic reviews, data analysis, and more.",
+  icons: {
+    icon: "/images/scientific_scribe_logo_transparent.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
