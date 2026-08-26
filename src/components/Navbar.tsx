@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ThemeToggle } from "./ThemeToggle";
+import { LogoMark } from "./brand/LogoMark";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -12,6 +13,10 @@ const navLinks = [
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
+
+function isActive(pathname: string, href: string) {
+  return pathname === href || (href !== "/" && pathname.startsWith(href));
+}
 
 export function Navbar() {
   const pathname = usePathname();
@@ -21,106 +26,93 @@ export function Navbar() {
     if (drawerOpen) {
       const prev = document.body.style.overflow;
       document.body.style.overflow = "hidden";
-      return () => { document.body.style.overflow = prev; };
+      return () => {
+        document.body.style.overflow = prev;
+      };
     }
   }, [drawerOpen]);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-lg">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/85 backdrop-blur-lg">
       <nav className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo — left */}
-        <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold tracking-tight">
-            <span className="text-accent">Scientific</span>{" "}
-            <span className="text-foreground">Scribe</span>
-          </span>
+        <Link href="/" className="flex items-center gap-2 font-display text-heading-xs tracking-tight">
+          <LogoMark variant="node" size={28} />
+          <span className="text-brass-600 dark:text-brass-500">Scientific</span>{" "}
+          <span className="text-foreground">Scribe</span>
         </Link>
 
-        {/* Desktop nav — centered via absolute positioning, visible lg+ */}
         <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-1">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href))
-                  ? "bg-accent text-white"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
-              }`}
+              className="nav-link"
+              data-active={isActive(pathname, link.href)}
             >
               {link.label}
             </Link>
           ))}
         </div>
 
-        {/* Actions — right */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <ThemeToggle />
           <Link
             href="/quote"
-            className="hidden lg:inline-flex items-center px-5 py-2 rounded-lg bg-accent text-white text-sm font-medium hover:bg-accent-hover transition-colors"
+            className="btn btn-outline hidden px-5 py-2 text-caption min-h-[44px] lg:inline-flex"
           >
-            Get a Quote
+            Get a quote
           </Link>
-          {/* Mobile/tablet hamburger — below lg */}
           <Dialog.Root open={drawerOpen} onOpenChange={setDrawerOpen}>
             <Dialog.Trigger asChild>
               <button
-                className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted lg:hidden"
+                className="flex h-11 w-11 items-center justify-center rounded-none text-muted-foreground hover:text-foreground lg:hidden"
                 aria-label="Open navigation"
               >
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
             </Dialog.Trigger>
             <Dialog.Portal>
-              <Dialog.Overlay className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+              <Dialog.Overlay className="fixed inset-0 z-50 bg-ink-900/60 backdrop-blur-sm" />
               <Dialog.Content
-                className="fixed inset-y-0 right-0 z-50 w-full bg-background border-l border-border shadow-xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right data-[state=closed]:duration-300 data-[state=open]:duration-200"
+                className="fixed inset-y-0 right-0 z-50 w-full max-w-sm border-l border-border bg-background shadow-xl"
                 aria-label="Navigation"
               >
-                <div className="flex items-center justify-between h-16 px-4 border-b border-border">
-                  <Link href="/" className="flex items-center gap-2">
-                    <span className="text-xl font-bold tracking-tight">
-                      <span className="text-accent">Scientific</span>{" "}
-                      <span className="text-foreground">Scribe</span>
-                    </span>
+                <div className="flex h-16 items-center justify-between border-b border-border px-4">
+                  <Link href="/" className="flex items-center gap-2 font-display text-heading-xs tracking-tight">
+                    <LogoMark variant="node" size={28} />
+                    <span className="text-brass-600 dark:text-brass-500">Scientific</span>{" "}
+                    <span className="text-foreground">Scribe</span>
                   </Link>
                   <Dialog.Close asChild>
                     <button
-                      className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted"
+                      className="flex h-11 w-11 items-center justify-center rounded-none text-muted-foreground hover:text-foreground"
                       aria-label="Close navigation"
                     >
-                      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                       </svg>
                     </button>
                   </Dialog.Close>
                 </div>
-                <div className="flex flex-col p-4 space-y-1">
+                <div className="flex flex-col p-4">
                   {navLinks.map((link) => (
                     <Dialog.Close asChild key={link.href}>
                       <Link
                         href={link.href}
-                        className={`px-4 py-3 rounded-lg text-base font-medium transition-colors min-h-[44px] flex items-center ${
-                          pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href))
-                            ? "bg-accent text-white"
-                            : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                        }`}
+                        className="nav-link w-full justify-start text-body"
+                        data-active={isActive(pathname, link.href)}
                       >
                         {link.label}
                       </Link>
                     </Dialog.Close>
                   ))}
                 </div>
-                <div className="p-4 border-t border-border">
+                <div className="border-t border-border p-4">
                   <Dialog.Close asChild>
-                    <Link
-                      href="/quote"
-                      className="flex items-center justify-center w-full px-5 py-3 rounded-lg bg-accent text-white text-base font-medium hover:bg-accent-hover transition-colors min-h-[44px]"
-                    >
-                      Get a Quote
+                    <Link href="/quote" className="btn btn-solid w-full">
+                      Get a quote
                     </Link>
                   </Dialog.Close>
                 </div>

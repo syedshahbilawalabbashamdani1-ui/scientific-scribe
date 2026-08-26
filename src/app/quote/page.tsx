@@ -10,17 +10,19 @@ export const metadata: Metadata = {
 export default function QuotePage() {
   return (
     <>
-      <section className="relative py-12 sm:py-16 md:py-20 lg:py-28 bg-gradient-to-br from-navy-950 via-navy-900 to-teal-950">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-serif text-white">
-            Request a Quote
+      <section className="bg-ink-900 py-12 sm:py-16 lg:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="kicker">Quote</p>
+          <h1 className="mt-4 font-display text-heading-md text-paper-50 sm:text-heading-lg">
+            Request a quote
           </h1>
-          <p className="mt-3 sm:mt-4 text-base sm:text-lg text-navy-200 max-w-2xl mx-auto">
-            Tell us about your project and we will provide a detailed, no-obligation quote within 24 hours.
+          <p className="mt-4 max-w-xl text-body-lg leading-relaxed text-graphite-500">
+            Tell us about your project and we will provide a detailed, no-obligation quote within
+            24 hours.
           </p>
         </div>
       </section>
-      <section className="py-12 sm:py-16 md:py-20 lg:py-28 bg-background">
+      <section className="bg-background py-12 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
           <QuoteForm />
         </div>

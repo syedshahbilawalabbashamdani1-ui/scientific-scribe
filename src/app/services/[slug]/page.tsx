@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { services, getServiceBySlug } from "@/lib/services";
 import { ServiceDetail } from "@/components/ServiceDetail";
-import Link from "next/link";
+import { ManuscriptStackSlot } from "@/components/ManuscriptStackSlot";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -25,33 +26,32 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   const service = getServiceBySlug(slug);
   if (!service) notFound();
 
+  const related = services.filter((s) => s.slug !== slug).slice(0, 4);
+
   return (
     <>
-      <section className="relative py-12 sm:py-16 md:py-20 lg:py-28 bg-gradient-to-br from-navy-950 via-navy-900 to-teal-950">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-          <div className="text-4xl sm:text-5xl mb-4 sm:mb-6">{service.icon}</div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-serif text-white">
-            {service.title}
-          </h1>
-          <p className="mt-3 sm:mt-4 text-base sm:text-lg text-navy-200 max-w-2xl mx-auto">
-            {service.shortDescription}
-          </p>
+      <section className="bg-ink-900 py-12 sm:py-16 lg:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-start gap-10 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
+            <div className="max-w-3xl">
+              <p className="kicker">Service</p>
+              <h1 className="mt-4 font-display text-heading-md text-paper-50 sm:text-heading-lg">
+                {service.title}
+              </h1>
+              <p className="mt-4 max-w-xl text-body-lg leading-relaxed text-graphite-500">
+                {service.shortDescription}
+              </p>
+              <Link href="/quote" className="btn btn-solid-inverse mt-8">
+                Request a quote
+              </Link>
+            </div>
+            <div className="w-full max-w-[280px] shrink-0 lg:w-[280px]">
+              <ManuscriptStackSlot />
+            </div>
+          </div>
         </div>
       </section>
-      <ServiceDetail service={service} />
-      <section className="py-12 sm:py-16 bg-background">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-muted-foreground mb-4 sm:mb-6">
-            Ready to get started with {service.title}?
-          </p>
-          <Link
-            href="/quote"
-            className="inline-flex items-center justify-center px-6 sm:px-8 py-3 rounded-lg bg-accent text-white font-medium hover:bg-accent-hover transition-colors min-h-[44px]"
-          >
-            Request a Quote
-          </Link>
-        </div>
-      </section>
+      <ServiceDetail service={service} related={related} />
     </>
   );
 }

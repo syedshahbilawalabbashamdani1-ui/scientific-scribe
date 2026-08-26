@@ -23,22 +23,24 @@ export function SectionReveal({ children, className = "", delay = 0 }: SectionRe
 
     const el = ref.current;
 
-    gsap.fromTo(
-      el,
-      { opacity: 0, y: 40 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        delay,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 85%",
-          once: true,
-        },
-      }
-    );
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        el,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            once: true,
+          },
+        }
+      );
+    }, el);
 
     let resizeTimer: ReturnType<typeof setTimeout>;
     const onResize = () => {
@@ -50,9 +52,7 @@ export function SectionReveal({ children, className = "", delay = 0 }: SectionRe
     return () => {
       clearTimeout(resizeTimer);
       window.removeEventListener("resize", onResize);
-      ScrollTrigger.getAll().forEach((t) => {
-        if (t.trigger === el) t.kill();
-      });
+      ctx.revert();
     };
   }, [delay]);
 

@@ -5,28 +5,23 @@ import { SectionReveal } from "@/components/SectionReveal";
 
 export function HomeCta() {
   return (
-    <section className="py-16 sm:py-20 md:py-28 bg-gradient-to-br from-navy-950 via-navy-900 to-teal-950">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+    <section className="bg-ink-900 py-16 sm:py-20 lg:py-28">
+      <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
         <SectionReveal>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-serif text-white">
-            Ready to Elevate Your Research?
+          <p className="kicker">Begin a manuscript</p>
+          <h2 className="mt-4 font-display text-heading-sm text-paper-50 sm:text-heading-lg">
+            Ready to elevate your research?
           </h2>
-          <p className="mt-3 sm:mt-4 text-base sm:text-lg text-navy-200 max-w-2xl mx-auto">
+          <p className="mx-auto mt-4 max-w-xl text-body-lg leading-relaxed text-graphite-500">
             Get a detailed quote for your project. Whether you need a full manuscript or targeted
             data analysis, we are here to help you publish with confidence.
           </p>
-          <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-            <Link
-              href="/quote"
-              className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 rounded-lg bg-accent text-white font-medium text-base sm:text-lg hover:bg-accent-hover transition-colors min-h-[44px]"
-            >
-              Request a Quote
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
+            <Link href="/quote" className="btn btn-solid-inverse px-8">
+              Request a quote
             </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 rounded-lg border border-navy-600 text-white font-medium text-base sm:text-lg hover:bg-navy-800 transition-colors min-h-[44px]"
-            >
-              Contact Us
+            <Link href="/contact" className="btn btn-outline-inverse px-8">
+              Contact us
             </Link>
           </div>
         </SectionReveal>

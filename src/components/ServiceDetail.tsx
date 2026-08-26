@@ -1,50 +1,97 @@
 "use client";
 
+import Link from "next/link";
 import type { Service } from "@/lib/services";
-import { SectionReveal } from "@/components/SectionReveal";
+import { MarginRailLayout } from "@/components/MarginRailLayout";
+import { RedlineReveal } from "@/components/animations/RedlineReveal";
 
-export function ServiceDetail({ service }: { service: Service }) {
-  return (
-    <section className="py-12 sm:py-16 md:py-20 lg:py-28 bg-background">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <SectionReveal>
-          <div className="prose prose-lg max-w-none">
-            <h2 className="text-2xl font-bold font-serif text-foreground">
-              Overview
-            </h2>
-            <p className="text-muted-foreground leading-relaxed">
-              {service.fullDescription}
-            </p>
-          </div>
-        </SectionReveal>
+interface ServiceDetailProps {
+  service: Service;
+  related: Service[];
+}
 
-        <SectionReveal delay={0.1}>
-          <div className="mt-12">
-            <h2 className="text-2xl font-bold font-serif text-foreground mb-6">
-              What&apos;s Included
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {service.features.map((feature, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-3 rounded-lg border border-border bg-card p-4"
+export function ServiceDetail({ service, related }: ServiceDetailProps) {
+  const rail = (
+    <div className="space-y-10">
+      <section aria-label="Editorial notes">
+        <h2 className="font-mono text-caption uppercase tracking-widest text-brass-600 dark:text-brass-500">
+          Editorial notes
+        </h2>
+        <ol className="mt-4 space-y-4">
+          <li className="flex gap-3 font-mono text-footnote leading-relaxed text-muted-foreground">
+            <span className="shrink-0 text-citation-500">[1]</span>
+            <span>
+              Every engagement follows ICMJE recommendations for scholarly work conducted and
+              reported in journals.
+            </span>
+          </li>
+          <li className="flex gap-3 font-mono text-footnote leading-relaxed text-muted-foreground">
+            <span className="shrink-0 text-citation-500">[2]</span>
+            <span>Authorship credit is preserved for researchers; we edit, we never publish under our own name.</span>
+          </li>
+          <li className="flex gap-3 font-mono text-footnote leading-relaxed text-muted-foreground">
+            <span className="shrink-0 text-citation-500">[3]</span>
+            <span>Deliverables include tracked changes and a change log for full auditability.</span>
+          </li>
+        </ol>
+      </section>
+
+      <section aria-label="Related services" className="border-t border-border pt-8">
+        <h2 className="font-mono text-caption uppercase tracking-widest text-brass-600 dark:text-brass-500">
+          Related services
+        </h2>
+        <ul className="mt-4 space-y-3">
+          {related.map((rel) => (
+            <li key={rel.slug}>
+              <Link
+                href={`/services/${rel.slug}`}
+                className="group flex items-baseline justify-between gap-3 border-b border-border pb-3"
+              >
+                <span className="font-display text-body-lg text-card-foreground transition-colors group-hover:text-brass-600 dark:group-hover:text-brass-500">
+                  {rel.title}
+                </span>
+                <span
+                  className="font-mono text-caption text-citation-500 opacity-0 transition-opacity group-hover:opacity-100"
+                  aria-hidden="true"
                 >
-                  <svg
-                    className="h-5 w-5 text-accent mt-0.5 flex-shrink-0"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-sm text-card-foreground">{feature}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </SectionReveal>
-      </div>
-    </section>
+                  →
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="border-t border-border pt-8">
+        <Link href="/quote" className="btn btn-outline w-full">
+          Request a quote
+        </Link>
+      </section>
+    </div>
+  );
+
+  return (
+    <MarginRailLayout
+      title={
+        <h2 className="font-display text-heading-md text-foreground sm:text-heading-lg">Overview</h2>
+      }
+      rail={rail}
+    >
+      <p>
+        <RedlineReveal>{service.fullDescription}</RedlineReveal>
+      </p>
+
+      <h3 className="mt-12 font-display text-heading-sm text-foreground">What&rsquo;s included</h3>
+      <ul className="mt-6 divide-y divide-border border-y border-border">
+        {service.features.map((feature, i) => (
+          <li key={i} className="flex items-start gap-4 py-4">
+            <span className="shrink-0 pt-0.5 font-mono text-caption text-citation-500">
+              [{String(i + 1).padStart(2, "0")}]
+            </span>
+            <span className="text-body text-card-foreground">{feature}</span>
+          </li>
+        ))}
+      </ul>
+    </MarginRailLayout>
   );
 }

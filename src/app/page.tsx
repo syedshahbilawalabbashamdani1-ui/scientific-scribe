@@ -1,6 +1,6 @@
 import { HomeHero } from "@/components/HomeHero";
 import { HomeServices } from "@/components/HomeServices";
-import { HomeTrust } from "@/components/HomeTrust";
+import { PeerReviewStepper } from "@/components/animations/PeerReviewStepper";
 import { HomeCta } from "@/components/HomeCta";
 
 export default function HomePage() {
@@ -8,7 +8,7 @@ export default function HomePage() {
     <>
       <HomeHero />
       <HomeServices />
-      <HomeTrust />
+      <PeerReviewStepper />
       <HomeCta />
     </>
   );

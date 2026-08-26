@@ -9,13 +9,14 @@ export const metadata: Metadata = {
 
 export default function ServicesPage() {
   return (
-    <section className="py-12 sm:py-16 md:py-20 lg:py-28 bg-background">
+    <section className="bg-background py-12 sm:py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-serif text-foreground">
-            Our Services
+        <div className="mb-12 max-w-2xl sm:mb-16">
+          <p className="kicker">Catalogue</p>
+          <h1 className="mt-3 font-display text-heading-md text-foreground sm:text-heading-lg">
+            Our services
           </h1>
-          <p className="mt-3 sm:mt-4 text-base sm:text-lg text-muted-foreground">
+          <p className="mt-4 text-body-lg text-muted-foreground leading-relaxed">
             Comprehensive academic and medical writing solutions tailored to your research needs.
           </p>
         </div>
