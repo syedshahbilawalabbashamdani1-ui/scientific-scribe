@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer className="mt-auto border-t border-ink-800 bg-ink-900 text-paper-100">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
           <div>
             <h3 className="flex items-center gap-2 font-display text-heading-xs tracking-tight">
               <LogoMark variant="node" size={24} />
@@ -29,6 +29,28 @@ export function Footer() {
                 { href: "/about", label: "About" },
                 { href: "/quote", label: "Get a Quote" },
                 { href: "/contact", label: "Contact" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="inline-flex min-h-[44px] items-center text-footnote text-paper-100 transition-colors hover:text-brass-500"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-mono text-caption uppercase tracking-widest text-brass-500">
+              Legal & Help
+            </h4>
+            <ul className="mt-2 space-y-1">
+              {[
+                { href: "/faqs", label: "FAQs" },
+                { href: "/terms", label: "              Terms and Conditions" },
+                { href: "/privacy", label: "Privacy Policy" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link

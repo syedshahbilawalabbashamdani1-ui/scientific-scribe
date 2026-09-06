@@ -1,27 +1,45 @@
 import type { Metadata } from "next";
-import { Fraunces, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ScrollProgress } from "@/components/ScrollProgress";
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  style: ["normal", "italic"],
+const fraunces = localFont({
+  src: [
+    { path: "../../public/fonts/fraunces/400.ttf", weight: "400", style: "normal" },
+    { path: "../../public/fonts/fraunces/400-italic.ttf", weight: "400", style: "italic" },
+    { path: "../../public/fonts/fraunces/500.ttf", weight: "500", style: "normal" },
+    { path: "../../public/fonts/fraunces/500-italic.ttf", weight: "500", style: "italic" },
+    { path: "../../public/fonts/fraunces/600.ttf", weight: "600", style: "normal" },
+    { path: "../../public/fonts/fraunces/600-italic.ttf", weight: "600", style: "italic" },
+    { path: "../../public/fonts/fraunces/700.ttf", weight: "700", style: "normal" },
+    { path: "../../public/fonts/fraunces/700-italic.ttf", weight: "700", style: "italic" },
+  ],
   variable: "--font-fraunces",
+  display: "swap",
+  adjustFontFallback: "Times New Roman",
 });
 
-const plexSans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+const ibmPlexSans = localFont({
+  src: [
+    { path: "../../public/fonts/ibm-plex-sans/400.ttf", weight: "400" },
+    { path: "../../public/fonts/ibm-plex-sans/500.ttf", weight: "500" },
+    { path: "../../public/fonts/ibm-plex-sans/600.ttf", weight: "600" },
+  ],
   variable: "--font-plex-sans",
+  display: "swap",
+  adjustFontFallback: "Arial",
 });
 
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
+const ibmPlexMono = localFont({
+  src: [
+    { path: "../../public/fonts/ibm-plex-mono/400.ttf", weight: "400" },
+    { path: "../../public/fonts/ibm-plex-mono/500.ttf", weight: "500" },
+  ],
   variable: "--font-plex-mono",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -40,7 +58,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${plexSans.variable} ${plexMono.variable} h-full`}
+      className={`h-full ${fraunces.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col antialiased">

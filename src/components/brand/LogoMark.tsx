@@ -31,7 +31,7 @@ function BracketMark() {
       x={0}
       y={10}
       textAnchor="middle"
-      fontFamily="var(--font-plex-mono), 'IBM Plex Mono', ui-monospace, monospace"
+      fontFamily="var(--font-mono)"
       fontWeight={700}
       fontSize={34}
       fill="var(--logo-fill)"

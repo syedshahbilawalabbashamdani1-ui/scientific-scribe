@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { QuoteForm } from "@/components/QuoteForm";
+import { SectionReveal } from "@/components/SectionReveal";
 
 export const metadata: Metadata = {
   title: "Request a Quote",
@@ -24,7 +25,9 @@ export default function QuotePage() {
       </section>
       <section className="bg-background py-12 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
-          <QuoteForm />
+          <SectionReveal>
+            <QuoteForm />
+          </SectionReveal>
         </div>
       </section>
     </>

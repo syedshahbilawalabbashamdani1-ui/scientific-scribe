@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { MarginRailLayout } from "@/components/MarginRailLayout";
-import { RedlineReveal } from "@/components/animations/RedlineReveal";
+import { SectionReveal } from "@/components/SectionReveal";
+import { ParallaxPhoto } from "@/components/ParallaxPhoto";
 
 export const metadata: Metadata = {
   title: "About",
@@ -98,69 +100,93 @@ export default function AboutPage() {
     <>
       <section className="bg-ink-900 py-12 sm:py-16 lg:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <p className="kicker">About</p>
-          <h1 className="mt-4 max-w-3xl font-display text-heading-md text-paper-50 sm:text-heading-lg">
-            The scribes behind the citations
-          </h1>
-          <p className="mt-4 max-w-xl text-body-lg leading-relaxed text-graphite-500">
-            Dedicated to advancing scientific communication through precision, expertise, and
-            integrity.
-          </p>
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16 lg:items-center">
+            <div>
+              <p className="kicker">About</p>
+              <h1 className="mt-4 max-w-3xl font-display text-heading-md text-paper-50 sm:text-heading-lg">
+                The scribes behind the citations
+              </h1>
+              <p className="mt-4 max-w-xl text-body-lg leading-relaxed text-graphite-500">
+                Dedicated to advancing scientific communication through precision, expertise, and
+                integrity.
+              </p>
+            </div>
+            <div className="relative aspect-[4/3] w-full">
+              <ParallaxPhoto className="absolute inset-0">
+                <Image
+                  src="/images/about-laptop.jpg"
+                  alt="Person working on a laptop at a wooden desk with notebooks and coffee"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover duotone-paper"
+                  priority={false}
+                />
+              </ParallaxPhoto>
+            </div>
+          </div>
         </div>
       </section>
 
       <MarginRailLayout
         title={
-          <h2 className="font-display text-heading-sm text-foreground sm:text-heading-md">
-            Our mission
-          </h2>
+          <SectionReveal>
+            <h2 className="font-display text-heading-sm text-foreground sm:text-heading-md">
+              Our mission
+            </h2>
+          </SectionReveal>
         }
         rail={rail}
       >
-        <p>
-          Scientific Scribe was founded with a singular mission: to bridge the gap between rigorous
-          research and compelling scientific communication. We believe that{" "}
-          <RedlineReveal>every researcher deserves access</RedlineReveal> to professional writing
-          support that honors the depth and complexity of their work.
-        </p>
-        <p className="mt-6">
-          Too often, groundbreaking research fails to reach its audience due to language barriers,
-          formatting challenges, or simply the overwhelming demands of the publication process. We
-          exist to solve that problem.
-        </p>
+        <SectionReveal delay={0.05}>
+          <p>
+            Scientific Scribe was founded with a singular mission: to bridge the gap between rigorous
+            research and compelling scientific communication. We believe that
+            every researcher deserves access to professional writing
+            support that honors the depth and complexity of their work.
+          </p>
+          <p className="mt-6">
+            Too often, groundbreaking research fails to reach its audience due to language barriers,
+            formatting challenges, or simply the overwhelming demands of the publication process. We
+            exist to solve that problem.
+          </p>
+        </SectionReveal>
 
-        <h3 className="mt-14 font-display text-heading-sm text-foreground">
-          Expertise &amp; credentials
-        </h3>
-        <dl className="mt-6 divide-y divide-border border-y border-border">
-          {expertise.map((item) => (
-            <div key={item.title} className="py-5">
-              <dt className="font-display text-body-lg text-card-foreground">{item.title}</dt>
-              <dd className="mt-1 text-footnote leading-relaxed text-muted-foreground">
-                {item.description}
-              </dd>
-            </div>
-          ))}
-        </dl>
+        <SectionReveal delay={0.1}>
+          <h3 className="mt-14 font-display text-heading-sm text-foreground">
+            Expertise &amp; credentials
+          </h3>
+          <dl className="mt-6 divide-y divide-border border-y border-border">
+            {expertise.map((item) => (
+              <div key={item.title} className="py-5">
+                <dt className="font-display text-body-lg text-card-foreground">{item.title}</dt>
+                <dd className="mt-1 text-footnote leading-relaxed text-muted-foreground">
+                  {item.description}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </SectionReveal>
 
-        <h3 className="mt-14 font-display text-heading-sm text-foreground">Our approach</h3>
-        <p className="mt-6">
-          Every project begins with a thorough understanding of your research objectives, target
-          journal, and specific requirements. We do not believe in one-size-fits-all solutions —
-          each manuscript receives{" "}
-          <RedlineReveal>individualized attention</RedlineReveal> from conception through final
-          submission.
-        </p>
-        <p className="mt-6">
-          Our process is transparent and collaborative. You maintain full ownership and control of
-          your work at every stage, with clear communication and revision opportunities built into
-          every engagement.
-        </p>
-        <p className="mt-6">
-          We are committed to ethical practice. We do not fabricate data, generate false reviews,
-          or engage in any form of academic misconduct. Our role is to amplify your research voice
-          — <RedlineReveal>not replace it.</RedlineReveal>
-        </p>
+        <SectionReveal delay={0.15}>
+          <h3 className="mt-14 font-display text-heading-sm text-foreground">Our approach</h3>
+          <p className="mt-6">
+            Every project begins with a thorough understanding of your research objectives, target
+            journal, and specific requirements. We do not believe in one-size-fits-all solutions —
+            each manuscript receives
+            individualized attention from conception through final
+            submission.
+          </p>
+          <p className="mt-6">
+            Our process is transparent and collaborative. You maintain full ownership and control of
+            your work at every stage, with clear communication and revision opportunities built into
+            every engagement.
+          </p>
+          <p className="mt-6">
+            We are committed to ethical practice. We do not fabricate data, generate false reviews,
+            or engage in any form of academic misconduct. Our role is to amplify your research voice
+            — not replace it.
+          </p>
+        </SectionReveal>
       </MarginRailLayout>
     </>
   );

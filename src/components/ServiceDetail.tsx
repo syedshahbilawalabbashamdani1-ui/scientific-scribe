@@ -3,7 +3,7 @@
 import Link from "next/link";
 import type { Service } from "@/lib/services";
 import { MarginRailLayout } from "@/components/MarginRailLayout";
-import { RedlineReveal } from "@/components/animations/RedlineReveal";
+import { SectionReveal } from "@/components/SectionReveal";
 
 interface ServiceDetailProps {
   service: Service;
@@ -73,25 +73,31 @@ export function ServiceDetail({ service, related }: ServiceDetailProps) {
   return (
     <MarginRailLayout
       title={
-        <h2 className="font-display text-heading-md text-foreground sm:text-heading-lg">Overview</h2>
+        <SectionReveal>
+          <h2 className="font-display text-heading-md text-foreground sm:text-heading-lg">Overview</h2>
+        </SectionReveal>
       }
       rail={rail}
     >
-      <p>
-        <RedlineReveal>{service.fullDescription}</RedlineReveal>
-      </p>
+      <SectionReveal>
+        <p>
+          {service.fullDescription}
+        </p>
+      </SectionReveal>
 
-      <h3 className="mt-12 font-display text-heading-sm text-foreground">What&rsquo;s included</h3>
-      <ul className="mt-6 divide-y divide-border border-y border-border">
-        {service.features.map((feature, i) => (
-          <li key={i} className="flex items-start gap-4 py-4">
-            <span className="shrink-0 pt-0.5 font-mono text-caption text-citation-500">
-              [{String(i + 1).padStart(2, "0")}]
-            </span>
-            <span className="text-body text-card-foreground">{feature}</span>
-          </li>
-        ))}
-      </ul>
+      <SectionReveal>
+        <h3 className="mt-12 font-display text-heading-sm text-foreground">What&rsquo;s included</h3>
+        <ul className="mt-6 divide-y divide-border border-y border-border">
+          {service.features.map((feature, i) => (
+            <li key={i} className="flex items-start gap-4 py-4">
+              <span className="shrink-0 pt-0.5 font-mono text-caption text-citation-500">
+                [{String(i + 1).padStart(2, "0")}]
+              </span>
+              <span className="text-body text-card-foreground">{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </SectionReveal>
     </MarginRailLayout>
   );
 }
