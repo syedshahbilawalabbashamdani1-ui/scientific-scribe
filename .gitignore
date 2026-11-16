@@ -43,3 +43,8 @@ next-env.d.ts
 # AI tool files
 CLAUDE.md
 AGENTS.md
+
+# Briefing & planning documents
+Project-Briefing.md
+Tech_And_Stack.md
+Website-Design.md

@@ -1,94 +1,244 @@
 import type { Metadata } from "next";
-import { SectionReveal } from "@/components/SectionReveal";
+import Link from "next/link";
+import { PiArrowUpRight, PiEnvelopeSimple, PiScales } from "react-icons/pi";
+
+import { Breadcrumbs } from "@/components/breadcrumbs";
+import { JsonLd } from "@/components/json-ld";
+import { mailto, site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Terms and Conditions",
+  title: "Terms — scope, responsibility, and limits",
   description:
-    "Terms and conditions governing the use of Scientific Scribe's academic and medical writing services.",
+    "The plain-language terms that apply to Scientific-Scribe enquiries and engagements: quotes, revisions, confidentiality, authorship, and the limits of the service.",
+  alternates: { canonical: "/terms" },
 };
 
 const sections = [
   {
-    title: "1. Acceptance of Terms",
-    body: "By accessing or using the services provided by Scientific Scribe (\"we,\" \"us,\" or \"our\"), you agree to be bound by these Terms and Conditions. If you do not agree to any part of these terms, you must not use our services. These terms apply to all clients, visitors, and users of our website and services.",
+    id: "website",
+    title: "This website",
+    body: [
+      "The site describes research support services and provides free planning tools. The tools are informational. They do not create an engagement, an offer, or a professional opinion about your research.",
+      "Estimates and matcher results are indicative. A written scope prepared after review is the authoritative description of any service.",
+    ],
   },
   {
-    title: "2. Services Provided",
-    body: "Scientific Scribe provides professional academic and medical writing services, including but not limited to research article writing, review article writing, meta-analysis, systematic reviews, proofreading, journal submission assistance, editing, report writing, case reports, letters to editors, commissioned pieces, AI content removal, plagiarism removal, and data analysis. The scope of each engagement is defined in the project agreement or quote provided to the client.",
+    id: "engagement",
+    title: "How an engagement begins",
+    body: [
+      "An engagement begins only when both parties accept a written scope that sets out the deliverables, assumptions, exclusions, timeline, fee, and revision allowance.",
+      "No payment is collected through this website. Payment terms, currency, and invoicing are stated in the written scope or a separate agreement.",
+      "Work outside the accepted scope is quoted before it starts. A material change in the research question, dataset, or target journal may require a new scope.",
+    ],
   },
   {
-    title: "3. Client Responsibilities",
-    body: "Clients are responsible for providing accurate, complete, and timely information required for the successful completion of their projects. This includes but is not limited to research data, manuscript drafts, target journal requirements, deadlines, and any specific instructions. Delays caused by incomplete or inaccurate client-provided materials may affect delivery timelines.",
+    id: "responsibilities",
+    title: "Your responsibilities",
+    body: [
+      "You confirm that you are authorised to share the material you provide and that you have the rights needed for us to work on it.",
+      "You remain responsible for the accuracy of the research, the data, the citations, the author list, ethics approvals, consent, and any required disclosures.",
+      "You approve every substantive change and the final version before submission or use. We do not submit manuscripts or communicate with journals on your behalf unless the scope explicitly authorises it.",
+    ],
   },
   {
-    title: "4. Authorship and Intellectual Property",
-    body: "Scientific Scribe acts as a writing and editing service provider. All authorship credit and intellectual property rights remain with the client researcher(s). We do not claim co-authorship or ownership over any manuscripts, data, or research outputs. Our role is to assist in the preparation, editing, and formatting of materials for publication.",
+    id: "integrity",
+    title: "Academic integrity",
+    body: [
+      "We do not fabricate or falsify data, invent citations, remove legitimate attribution to reduce a similarity score, or misrepresent authorship.",
+      "We do not guarantee journal acceptance, peer-review outcomes, statistical significance, or the output of any AI or similarity detector.",
+      "Where a journal, institution, or funder requires disclosure of AI-assisted editing or other support, compliance with that requirement remains your responsibility.",
+      "We may decline work that asks us to breach these limits.",
+    ],
   },
   {
-    title: "5. Confidentiality",
-    body: "We treat all client materials, research data, and project details as strictly confidential. We do not disclose, share, or publish any client information or work product without explicit written consent. All team members are bound by confidentiality agreements covering client work.",
+    id: "confidentiality",
+    title: "Confidentiality",
+    body: [
+      "We treat manuscripts, datasets, and related material as confidential and limit access to the assigned specialist team.",
+      "We do not use client material for marketing, model training, or public examples. Illustrative examples on this site are constructed teaching examples, not client work.",
+      "You are responsible for de-identifying patient material before transfer. A separate confidentiality agreement can be put in place where required.",
+    ],
   },
   {
-    title: "6. Payment Terms",
-    body: "Payment terms are specified in the project quote or agreement provided to the client. Unless otherwise agreed in writing, payment is due within the timeframe stated on the invoice. Late payments may incur additional charges as outlined in the project agreement. We reserve the right to suspend work on projects with overdue payments.",
+    id: "delivery",
+    title: "Delivery and revisions",
+    body: [
+      "Timelines are agreed in writing and depend on receiving complete, readable files and timely answers to queries. Delays in either can move the delivery date.",
+      "One structured revision round is included unless the scope says otherwise. Additional rounds, new analyses, and new sections are new scope.",
+      "Files are delivered in the formats named in the scope. We are not responsible for changes made after handoff or for formatting introduced by a journal's production process.",
+    ],
   },
   {
-    title: "7. Revisions and Amendments",
-    body: "The number of revision rounds included in each project is specified in the project quote. Additional revision rounds beyond the agreed scope may incur additional charges. Revision requests must be provided in writing and within the timeframe specified in the project agreement.",
+    id: "fees",
+    title: "Fees, cancellation, and refunds",
+    body: [
+      "Fees are quoted in the currency stated in the scope. Taxes, journal fees, open-access charges, and software licences are excluded unless explicitly included.",
+      "If you cancel after work has begun, fees are payable for work completed and for any non-recoverable commitments already made. The scope states the cancellation terms that apply.",
+      "If we cannot complete the agreed scope, we will say so promptly and agree a fair resolution, including a refund of fees for undelivered work.",
+    ],
   },
   {
-    title: "8. Limitation of Liability",
-    body: "Scientific Scribe shall not be liable for any indirect, incidental, special, or consequential damages arising from the use of our services. Our total liability for any claim arising from a project shall not exceed the total fee paid for that specific project. We are not responsible for journal acceptance decisions, peer review outcomes, or any decisions made by third-party publishers.",
+    id: "ip",
+    title: "Intellectual property",
+    body: [
+      "You retain ownership of your research material and of the final work product, subject to payment of agreed fees.",
+      "We retain ownership of our underlying templates, checklists, methods, and know-how, and may reuse general approaches that do not contain your confidential material.",
+      "Third-party material remains subject to its own licence. You are responsible for obtaining permission to reproduce it.",
+    ],
   },
   {
-    title: "9. Disclaimer of Guarantees",
-    body: "While we strive to meet the highest standards of academic writing and formatting, we do not guarantee publication, acceptance by any journal, or specific outcomes from the use of our services. Journal acceptance depends on numerous factors outside our control, including peer review, editorial decisions, and journal capacity.",
+    id: "liability",
+    title: "Limits of liability",
+    body: [
+      "The service is professional support, not a warranty of an academic or commercial outcome. To the extent permitted by law, our liability for any engagement is limited to the fees paid for that engagement.",
+      "We are not liable for indirect or consequential loss, including lost opportunities, rejected submissions, or reputational effects.",
+      "Nothing in these terms excludes liability that cannot lawfully be excluded.",
+    ],
   },
   {
-    title: "10. Termination",
-    body: "Either party may terminate a project engagement with written notice. In the event of termination, the client is responsible for payment of all work completed up to the date of termination. Work products completed prior to termination will be delivered to the client upon receipt of payment for completed work.",
-  },
-  {
-    title: "11. Governing Law",
-    body: "These Terms and Conditions shall be governed by and construed in accordance with applicable laws. Any disputes arising from these terms or the use of our services shall be resolved through good-faith negotiation before pursuing any formal legal proceedings.",
-  },
-  {
-    title: "12. Changes to Terms",
-    body: "Scientific Scribe reserves the right to update or modify these Terms and Conditions at any time. Changes will be effective upon posting to this page. Continued use of our services after any modifications constitutes acceptance of the updated terms. Clients will be notified of material changes to these terms.",
+    id: "law",
+    title: "Governing terms",
+    body: [
+      "The governing law, venue, and any dispute-resolution process are confirmed in the written scope or engagement agreement. Where no separate agreement applies, the parties will first attempt to resolve the matter in good faith.",
+      "If any provision is found unenforceable, the remaining provisions continue to apply.",
+      "These terms may be updated. The version in effect when a scope is accepted governs that engagement.",
+    ],
   },
 ];
 
 export default function TermsPage() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Terms",
+    url: `${site.url}/terms`,
+    description:
+      "Terms for Scientific-Scribe enquiries and research support engagements.",
+  };
+
   return (
     <>
-      <section className="bg-ink-900 py-12 sm:py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <p className="kicker">Legal</p>
-          <h1 className="mt-4 font-display text-heading-md text-paper-50 sm:text-heading-lg">
-            Terms and Conditions
-          </h1>
-          <p className="mt-4 max-w-xl text-body-lg leading-relaxed text-graphite-500">
-            Please read these terms carefully before using our services.
-          </p>
+      <JsonLd data={schema} />
+
+      <section className="relative overflow-hidden border-b border-line">
+        <div
+          className="grid-paper pointer-events-none absolute inset-0"
+          aria-hidden="true"
+        />
+        <div className="shell relative py-10 sm:py-12">
+          <Breadcrumbs items={[{ label: "Terms" }]} />
+          <div className="mt-7 grid gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
+            <div>
+              <p className="meta">Terms</p>
+              <h1 className="display mt-4 max-w-[15ch]">
+                Clear scope.{" "}
+                <span className="text-quiet">Honest limits.</span>
+              </h1>
+              <p className="lede mt-5">
+                The short version: you approve a written scope, you keep
+                responsibility for the research, and no one promises a journal
+                outcome.
+              </p>
+            </div>
+            <div className="border-t border-line pt-4 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
+              <div className="flex items-start gap-2.5">
+                <PiScales
+                  className="mt-0.5 h-4 w-4 shrink-0 text-accent-text"
+                  aria-hidden="true"
+                />
+                <div>
+                  <p className="font-mono text-[8.5px] uppercase tracking-[0.12em] text-quiet">
+                    Last updated
+                  </p>
+                  <p className="mt-1 text-[11.5px]">16 November 2026</p>
+                  <p className="mt-2 text-[10px] leading-relaxed text-quiet">
+                    This page is a plain-language summary. The accepted written
+                    scope and any signed agreement take precedence.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
-      <section className="bg-background py-12 sm:py-16 lg:py-24">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <SectionReveal>
-            <p className="text-body text-muted-foreground leading-relaxed">
-              Last updated: {new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
-            </p>
-          </SectionReveal>
-          {sections.map((section, i) => (
-            <SectionReveal key={section.title} delay={Math.min((i + 1) * 0.03, 0.3)}>
-              <h2 className="mt-10 font-display text-heading-xs text-foreground">
-                {section.title}
-              </h2>
-              <p className="mt-3 text-body leading-relaxed text-muted-foreground">
-                {section.body}
+
+      <section className="border-b border-line">
+        <div className="shell grid gap-10 py-12 lg:grid-cols-[0.32fr_0.68fr] lg:gap-14 lg:py-16">
+          <nav aria-label="Terms contents" className="lg:sticky lg:top-24 lg:self-start">
+            <p className="meta">Contents</p>
+            <ol className="mt-3 border-t border-line">
+              {sections.map((section, index) => (
+                <li key={section.id} className="border-b border-line">
+                  <a
+                    href={`#${section.id}`}
+                    className="flex items-baseline gap-3 py-2.5 text-[11.5px] text-quiet transition-colors hover:text-ink"
+                  >
+                    <span className="font-mono text-[9px] text-accent-text">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    {section.title}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+
+          <div className="max-w-[72ch]">
+            {sections.map((section, index) => (
+              <section
+                key={section.id}
+                id={section.id}
+                className="scroll-mt-24 border-t border-line pt-5 pb-7 first:border-t-0 first:pt-0"
+              >
+                <div className="flex items-baseline gap-3">
+                  <span className="font-mono text-[9px] text-accent-text">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h2 className="text-[1.15rem] font-medium tracking-[-0.03em]">
+                    {section.title}
+                  </h2>
+                </div>
+                <div className="mt-3 space-y-3 pl-0 sm:pl-7">
+                  {section.body.map((paragraph) => (
+                    <p
+                      key={paragraph}
+                      className="text-[12.5px] leading-[1.75] text-quiet"
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </section>
+            ))}
+
+            <div className="mt-4 border border-line bg-tint p-4">
+              <p className="font-mono text-[9px] uppercase tracking-[0.12em] text-accent-text">
+                Questions about the terms
               </p>
-            </SectionReveal>
-          ))}
+              <a
+                href={mailto("Terms question")}
+                className="mt-2 inline-flex items-center gap-2 text-[12px] font-medium hover:text-accent-text"
+              >
+                <PiEnvelopeSimple className="h-4 w-4" aria-hidden="true" />
+                {site.email}
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-line bg-tint">
+        <div className="shell flex flex-col gap-3 py-8 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[11px] leading-relaxed text-quiet">
+            For how enquiries and files are handled, read the privacy notice.
+          </p>
+          <Link
+            href="/privacy"
+            className="inline-flex items-center gap-1.5 text-[11.5px] font-medium hover:text-accent-text"
+          >
+            Privacy notice
+            <PiArrowUpRight className="h-3 w-3" aria-hidden="true" />
+          </Link>
         </div>
       </section>
     </>

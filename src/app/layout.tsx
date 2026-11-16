@@ -1,71 +1,104 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { ScrollProgress } from "@/components/ScrollProgress";
 
-const fraunces = localFont({
-  src: [
-    { path: "../../public/fonts/fraunces/400.ttf", weight: "400", style: "normal" },
-    { path: "../../public/fonts/fraunces/400-italic.ttf", weight: "400", style: "italic" },
-    { path: "../../public/fonts/fraunces/500.ttf", weight: "500", style: "normal" },
-    { path: "../../public/fonts/fraunces/500-italic.ttf", weight: "500", style: "italic" },
-    { path: "../../public/fonts/fraunces/600.ttf", weight: "600", style: "normal" },
-    { path: "../../public/fonts/fraunces/600-italic.ttf", weight: "600", style: "italic" },
-    { path: "../../public/fonts/fraunces/700.ttf", weight: "700", style: "normal" },
-    { path: "../../public/fonts/fraunces/700-italic.ttf", weight: "700", style: "italic" },
-  ],
-  variable: "--font-fraunces",
-  display: "swap",
-  adjustFontFallback: "Times New Roman",
-});
-
-const ibmPlexSans = localFont({
-  src: [
-    { path: "../../public/fonts/ibm-plex-sans/400.ttf", weight: "400" },
-    { path: "../../public/fonts/ibm-plex-sans/500.ttf", weight: "500" },
-    { path: "../../public/fonts/ibm-plex-sans/600.ttf", weight: "600" },
-  ],
-  variable: "--font-plex-sans",
-  display: "swap",
-  adjustFontFallback: "Arial",
-});
-
-const ibmPlexMono = localFont({
-  src: [
-    { path: "../../public/fonts/ibm-plex-mono/400.ttf", weight: "400" },
-    { path: "../../public/fonts/ibm-plex-mono/500.ttf", weight: "500" },
-  ],
-  variable: "--font-plex-mono",
-  display: "swap",
-});
+import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
+import { ThemeProvider } from "@/components/theme-provider";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
   title: {
-    default: "Scientific Scribe — Academic & Medical Writing Services",
-    template: "%s | Scientific Scribe",
+    default: `${site.name} | Research support, scoped like a protocol`,
+    template: `%s | ${site.name}`,
   },
-  description:
-    "Professional academic and medical writing services. Research articles, meta-analyses, systematic reviews, data analysis, and more.",
+  description: site.description,
+  applicationName: site.name,
+  keywords: [
+    "academic research support",
+    "manuscript editing",
+    "journal submission",
+    "systematic review",
+    "meta-analysis",
+    "proofreading",
+    "biostatistics",
+    "SPSS analysis",
+    "R analysis",
+    "GraphPad Prism",
+    "research integrity",
+  ],
+  authors: [{ name: site.name }],
+  creator: site.name,
+  publisher: site.name,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "en",
+    url: site.url,
+    siteName: site.name,
+    title: `${site.name} | Research support, scoped like a protocol`,
+    description: site.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} | Research support, scoped like a protocol`,
+    description: site.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   icons: {
-    icon: "/brand/node/32x32.png",
+    icon: "/icon.svg",
   },
+  category: "education",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: site.name,
+  url: site.url,
+  email: site.email,
+  description: site.description,
+  slogan: site.tagline,
+  knowsAbout: [
+    "Manuscript writing",
+    "Systematic reviews",
+    "Meta-analysis",
+    "Journal submission",
+    "Academic language editing",
+    "Research integrity",
+    "Biostatistics",
+    "Data visualization",
+  ],
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`h-full ${fraunces.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}
-      suppressHydrationWarning
-    >
-      <body className="min-h-full flex flex-col antialiased">
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
         <ThemeProvider>
-          <ScrollProgress />
-          <Navbar />
-          <main className="flex-1">{children}</main>
+          <Header />
+          <main id="main-content">{children}</main>
           <Footer />
         </ThemeProvider>
       </body>
