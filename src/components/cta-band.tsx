@@ -1,7 +1,7 @@
-import Link from "next/link";
 import { PiArrowUpRight, PiEnvelopeSimple } from "react-icons/pi";
 
 import { site } from "@/lib/site";
+import { MagneticButton } from "@/components/magnetic-button";
 
 type CtaBandProps = {
   title?: string;
@@ -30,10 +30,10 @@ export function CtaBand({
           </p>
         </div>
         <div className="flex flex-col items-start gap-3 lg:items-end">
-          <Link href="/contact" className="btn btn-primary">
+          <MagneticButton href="/contact" className="btn btn-primary">
             Request a scope check
             <PiArrowUpRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
+          </MagneticButton>
           <a
             href={`mailto:${site.email}`}
             className="inline-flex items-center gap-1.5 text-[11.5px] text-quiet transition-colors hover:text-ink"

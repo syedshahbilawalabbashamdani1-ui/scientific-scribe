@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { Logo } from "@/components/logo";
 import { footerNavigation, site } from "@/lib/site";
 import { pillars } from "@/lib/services";
 import { PiArrowUpRight, PiEnvelopeSimple } from "react-icons/pi";
@@ -11,14 +12,10 @@ export function Footer() {
         <div>
           <Link
             href="/"
-            className="inline-flex items-baseline text-[19px] font-semibold tracking-[-0.045em]"
+            aria-label={`${site.name} home`}
+            className="group inline-flex items-center text-[19px] font-semibold tracking-[-0.045em]"
           >
-            <span className="sr-only">{site.name} home</span>
-            <span aria-hidden="true" className="flex items-baseline gap-1">
-              Scientific
-              <span className="inline-block h-[7px] w-[7px] rounded-full bg-accent" aria-hidden="true" />
-              Scribe
-            </span>
+            <Logo />
           </Link>
           <p className="mt-4 max-w-[30ch] text-[13px] leading-relaxed text-quiet">
             Thoughtful support for the work behind every paper, from the first

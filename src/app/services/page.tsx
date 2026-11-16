@@ -5,6 +5,7 @@ import { PiArrowUpRight, PiCompass } from "react-icons/pi";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { CtaBand } from "@/components/cta-band";
 import { JsonLd } from "@/components/json-ld";
+import { MagneticButton } from "@/components/magnetic-button";
 import { ServiceFilter } from "@/components/service-filter";
 import { site } from "@/lib/site";
 import { pillars } from "@/lib/services";
@@ -145,13 +146,13 @@ export default function ServicesPage() {
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Link href="/match" className="btn btn-primary btn-sm">
+            <MagneticButton href="/match" className="btn btn-primary btn-sm">
               Find your path
               <PiArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-            </Link>
-            <Link href="/contact" className="btn btn-outline btn-sm">
+            </MagneticButton>
+            <MagneticButton href="/contact" className="btn btn-outline btn-sm">
               Ask a methodologist
-            </Link>
+            </MagneticButton>
           </div>
         </div>
       </section>

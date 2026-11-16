@@ -3,6 +3,8 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+
+import { MagneticButton } from "@/components/magnetic-button";
 import {
   PiArrowLeft,
   PiArrowRight,
@@ -224,13 +226,13 @@ export function ServiceMatcher({ compact = false, className }: ServiceMatcherPro
               </p>
 
               <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
-                <Link
+                <MagneticButton
                   href={`/services/${recommendation.primary.pillar}/${recommendation.primary.slug}`}
                   className="btn btn-primary btn-sm"
                 >
                   Explore this service
                   <PiArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-                </Link>
+                </MagneticButton>
                 <Link
                   href="/contact"
                   className="inline-flex items-center gap-1.5 text-[11.5px] font-medium hover:text-accent-text"

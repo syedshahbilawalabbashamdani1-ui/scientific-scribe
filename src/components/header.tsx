@@ -9,9 +9,9 @@ import {
   PiArrowUpRight,
   PiCaretDown,
   PiEnvelopeSimple,
-  PiList,
-  PiX,
 } from "react-icons/pi";
+import { MagneticButton } from "@/components/magnetic-button";
+import { Logo } from "@/components/logo";
 
 import { navigation, site } from "@/lib/site";
 import { pillars } from "@/lib/services";
@@ -24,9 +24,41 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const mobilePanelRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const wasMobileOpen = useRef(false);
+  const megaCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelMegaClose = () => {
+    if (megaCloseTimer.current) {
+      clearTimeout(megaCloseTimer.current);
+      megaCloseTimer.current = null;
+    }
+  };
+
+  const openMega = () => {
+    cancelMegaClose();
+    setMegaOpen(true);
+  };
+
+  // Small delay so moving the pointer from the trigger down into the panel
+  // does not close the menu in the gap between the two.
+  const scheduleMegaClose = () => {
+    cancelMegaClose();
+    megaCloseTimer.current = setTimeout(() => {
+      megaCloseTimer.current = null;
+      setMegaOpen(false);
+    }, 140);
+  };
+
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    setMegaOpen(false);
+    setMobileOpen(false);
+  }
 
   const closeMenus = () => {
+    cancelMegaClose();
     setMegaOpen(false);
     setMobileOpen(false);
   };
@@ -36,8 +68,25 @@ export function Header() {
   };
 
   useEffect(() => {
+    return () => {
+      if (megaCloseTimer.current) clearTimeout(megaCloseTimer.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    function onDocClick(e: globalThis.MouseEvent) {
+      if (!mobileOpen) return;
+      if (headerRef.current && headerRef.current.contains(e.target as Node)) return;
+      setMobileOpen(false);
+    }
+    document.addEventListener("mousedown", onDocClick);
+    return () => document.removeEventListener("mousedown", onDocClick);
+  }, [mobileOpen]);
+
+  useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
+        cancelMegaClose();
         setMegaOpen(false);
         setMobileOpen(false);
       }
@@ -100,86 +149,178 @@ export function Header() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="glass sticky top-0 z-50">
-      <div className="shell flex h-[68px] items-center justify-between gap-4">
-        <Link
-          href="/"
-          className="group flex shrink-0 items-baseline text-[17px] font-semibold tracking-[-0.045em] sm:text-[19px]"
-        >
-          <span className="sr-only">{site.name} home</span>
-          <span aria-hidden="true" className="flex items-baseline gap-1">
-            Scientific
-            <span
-              className="inline-block h-[7px] w-[7px] rounded-full bg-accent transition-transform group-hover:scale-125"
-              aria-hidden="true"
-            />
-            Scribe
-          </span>
-        </Link>
-
-        <nav
-          className="hidden items-center gap-5 lg:flex xl:gap-7"
-          aria-label="Main navigation"
-        >
-          {navigation.map((item) =>
-            item.mega ? (
-              <button
-                key={item.href}
-                type="button"
-                className={`flex items-center gap-1 py-2 text-[13px] transition-colors hover:text-accent-text ${
-                  isActive(item.href) ? "text-ink" : "text-quiet"
-                }`}
-                aria-expanded={megaOpen}
-                aria-controls="services-menu"
-                onClick={() => setMegaOpen((open) => !open)}
-              >
-                {item.label}
-                <PiCaretDown
-                  className={`h-3 w-3 transition-transform ${
-                    megaOpen ? "rotate-180" : ""
-                  }`}
-                  aria-hidden="true"
-                />
-              </button>
-            ) : (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={closeMenus}
-                className={`inline-flex items-center py-2 text-[13px] transition-colors hover:text-accent-text ${
-                  isActive(item.href) ? "text-ink" : "text-quiet"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ),
-          )}
-        </nav>
-
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
+    <header ref={headerRef} className="sticky top-0 z-50">
+      <div className="glass relative">
+        <div className="shell flex h-[68px] items-center justify-between gap-4">
           <Link
-            href="/contact"
-            className="btn btn-primary btn-sm hidden md:inline-flex"
+            href="/"
+            aria-label={`${site.name} home`}
+            className="group flex shrink-0 items-center text-[17px] font-semibold tracking-[-0.045em] sm:text-[19px]"
           >
-            Request a scope check
-            <PiArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+            <Logo />
           </Link>
-          <button
-            ref={menuButtonRef}
-            type="button"
-            className="grid h-9 w-9 place-items-center rounded-full border border-line lg:hidden"
-            onClick={() => setMobileOpen((open) => !open)}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-menu"
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+
+          <nav
+            className="hidden items-center gap-5 lg:flex xl:gap-7"
+            aria-label="Main navigation"
           >
-            {mobileOpen ? (
-              <PiX className="h-4 w-4" aria-hidden="true" />
-            ) : (
-              <PiList className="h-4 w-4" aria-hidden="true" />
+            {navigation.map((item) =>
+              item.mega ? (
+                <button
+                  key={item.href}
+                  type="button"
+                  className={`flex items-center gap-1 py-2 text-[13px] transition-colors hover:text-accent-text ${
+                    isActive(item.href) ? "text-ink" : "text-quiet"
+                  }`}
+                  aria-expanded={megaOpen}
+                  aria-controls="services-menu"
+                  aria-haspopup="true"
+                  onMouseEnter={openMega}
+                  onMouseLeave={scheduleMegaClose}
+                  onFocus={openMega}
+                  onClick={() => setMegaOpen((open) => !open)}
+                >
+                  {item.label}
+                  <PiCaretDown
+                    className={`h-3 w-3 transition-transform ${
+                      megaOpen ? "rotate-180" : ""
+                    }`}
+                    aria-hidden="true"
+                  />
+                </button>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={closeMenus}
+                  className={`inline-flex items-center py-2 text-[13px] transition-colors hover:text-accent-text ${
+                    isActive(item.href) ? "text-ink" : "text-quiet"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ),
             )}
-          </button>
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <MagneticButton
+              href="/contact"
+              className="btn btn-primary btn-sm hidden md:inline-flex"
+              wrapperClassName="hidden md:inline-flex"
+            >
+              Request a scope check
+              <PiArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+            </MagneticButton>
+            <button
+              ref={menuButtonRef}
+              type="button"
+              className={`nav-toggle text-ink lg:hidden ${mobileOpen ? "open" : ""}`}
+              onClick={() => setMobileOpen((open) => !open)}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            >
+              <svg
+                className="hm"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                style={{ width: "22px", height: "22px" }}
+              >
+                <circle cx="4" cy="4" r="2" />
+                <circle cx="12" cy="4" r="2" />
+                <circle cx="20" cy="4" r="2" />
+                <circle cx="4" cy="12" r="2" />
+                <circle cx="12" cy="12" r="2" />
+                <circle cx="20" cy="12" r="2" />
+                <circle cx="4" cy="20" r="2" />
+                <circle cx="12" cy="20" r="2" />
+                <circle cx="20" cy="20" r="2" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* ALPHA-style Floating Sub-Menu */}
+        <div
+          ref={mobilePanelRef}
+          id="mobile-menu"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Site menu"
+          className={`sub-menu lg:hidden ${mobileOpen ? "open" : ""}`}
+        >
+          <div className="sub-menu-shell" onClick={closeMenusOnLink}>
+            <div className="sub-menu-section">
+              <Link
+                href="/services"
+                className={`menu-item ${isActive("/services") ? "menu-item-active" : ""}`}
+                onClick={closeMenus}
+              >
+                <span>Services</span>
+                <PiArrowUpRight className="h-4 w-4 text-accent-text" aria-hidden="true" />
+              </Link>
+              {navigation
+                .filter((item) => !item.mega)
+                .map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`menu-item ${isActive(item.href) ? "menu-item-active" : ""}`}
+                    onClick={closeMenus}
+                  >
+                    <span>{item.label}</span>
+                    <PiArrowUpRight className="h-4 w-4 text-accent-text opacity-70" aria-hidden="true" />
+                  </Link>
+                ))}
+            </div>
+
+            <div className="sub-menu-divider" />
+
+            <div className="sub-menu-section">
+              <div className="sub-menu-label">Pillars</div>
+              <div className="grid grid-cols-2 gap-0.5 pt-1">
+                {pillars.map((pillar) => (
+                  <Link
+                    key={pillar.slug}
+                    href={`/services/${pillar.slug}`}
+                    className="menu-item menu-item-secondary"
+                    onClick={closeMenus}
+                  >
+                    <span className="mr-1.5 font-mono text-[9px] text-accent-text">
+                      {pillar.number}
+                    </span>
+                    <span className="truncate">{pillar.shortName}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="sub-menu-divider" />
+
+            <div className="sub-menu-section pt-1">
+              <MagneticButton
+                href="/contact"
+                onClick={closeMenus}
+                className="btn btn-primary btn-sm w-full"
+                wrapperClassName="flex w-full"
+              >
+                Request a scope check
+                <PiArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+              </MagneticButton>
+              <a
+                href={`mailto:${site.email}`}
+                onClick={closeMenus}
+                className="mt-2 flex items-center justify-center gap-1.5 py-1 text-[11.5px] text-quiet transition-colors hover:text-ink"
+              >
+                <PiEnvelopeSimple className="h-3.5 w-3.5" aria-hidden="true" />
+                {site.email}
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -200,6 +341,8 @@ export function Header() {
             <motion.div
               id="services-menu"
               className="fixed inset-x-0 top-[68px] z-[45] hidden border-y border-line bg-page/95 shadow-[0_24px_60px_var(--color-shadow)] backdrop-blur-xl lg:block"
+              onMouseEnter={openMega}
+              onMouseLeave={scheduleMegaClose}
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
@@ -268,77 +411,6 @@ export function Header() {
         )}
       </AnimatePresence>
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            ref={mobilePanelRef}
-            id="mobile-menu"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Site menu"
-            className="fixed inset-x-0 top-[68px] bottom-0 z-[45] overflow-y-auto border-t border-line bg-page lg:hidden"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -10 }}
-            transition={{ duration: reduce ? 0 : 0.22, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="shell flex min-h-full flex-col py-6">
-              <nav aria-label="Mobile navigation" onClick={closeMenusOnLink}>
-                <Link
-                  href="/services"
-                  className="flex items-center justify-between border-b border-line py-4 text-[1.7rem] font-medium tracking-[-0.04em]"
-                >
-                  Services
-                  <PiArrowUpRight className="h-4 w-4 text-accent-text" aria-hidden="true" />
-                </Link>
-                <div className="grid grid-cols-2 gap-x-5 border-b border-line py-4">
-                  {pillars.map((pillar) => (
-                    <Link
-                      key={pillar.slug}
-                      href={`/services/${pillar.slug}`}
-                      className="py-1.5 text-[13px] text-quiet"
-                    >
-                      <span className="mr-2 font-mono text-[9px] text-accent-text">
-                        {pillar.number}
-                      </span>
-                      {pillar.shortName}
-                    </Link>
-                  ))}
-                </div>
-                {navigation
-                  .filter((item) => !item.mega)
-                  .map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="flex items-center justify-between border-b border-line py-4 text-[1.7rem] font-medium tracking-[-0.04em]"
-                    >
-                      {item.label}
-                      <PiArrowUpRight className="h-4 w-4 text-accent-text" aria-hidden="true" />
-                    </Link>
-                  ))}
-              </nav>
-
-              <div className="mt-auto pt-8">
-                <Link href="/contact" className="btn btn-primary w-full">
-                  Request a scope check
-                  <PiArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
-                <a
-                  href={`mailto:${site.email}`}
-                  className="mt-4 flex items-center gap-2 text-[12px] text-quiet"
-                >
-                  <PiEnvelopeSimple className="h-3.5 w-3.5" aria-hidden="true" />
-                  {site.email}
-                </a>
-                <p className="mt-3 text-[11px] leading-relaxed text-quiet">
-                  Documents and datasets are treated as confidential.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </header>
   );
 }

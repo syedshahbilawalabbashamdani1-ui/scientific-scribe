@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { PiCheck, PiCopy } from "react-icons/pi";
 
+import { MagneticButton } from "@/components/magnetic-button";
+
 const template = `Dear Editor,
 
 Please consider the enclosed manuscript, "[Manuscript title]", for publication as a [article type] in [Journal name].
@@ -65,10 +67,10 @@ export function CoverLetterTool() {
               Replace every bracketed field before use.
             </p>
           </div>
-          <button type="button" onClick={copyTemplate} className="btn btn-outline btn-sm">
+          <MagneticButton asButton onClick={copyTemplate} className="btn btn-outline btn-sm">
             <PiCopy className="h-3 w-3" aria-hidden="true" />
             {copyState === "copied" ? "Copied" : "Copy"}
-          </button>
+          </MagneticButton>
         </div>
         <div className="max-h-[520px] overflow-auto bg-tint p-4">
           <pre className="whitespace-pre-wrap font-mono text-[11px] leading-[1.8] text-ink">

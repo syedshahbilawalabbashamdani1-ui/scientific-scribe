@@ -14,6 +14,7 @@ import { AnalysisFigure } from "@/components/analysis-figure";
 import { BeforeAfter } from "@/components/before-after";
 import { CtaBand } from "@/components/cta-band";
 import { Estimator } from "@/components/estimator";
+import { MagneticButton } from "@/components/magnetic-button";
 import { PillarConsole } from "@/components/pillar-console";
 import { Reveal } from "@/components/reveal";
 import { ServiceMatcher } from "@/components/service-matcher";
@@ -82,14 +83,14 @@ export default function HomePage() {
               biostatistics, agreed before work begins.
             </p>
             <div className="mt-6 flex flex-wrap gap-2.5">
-              <Link href="/match" className="btn btn-primary">
+              <MagneticButton href="/match" className="btn btn-primary">
                 Find your path
                 <PiArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link href="/contact" className="btn btn-outline">
+              </MagneticButton>
+              <MagneticButton href="/contact" className="btn btn-outline">
                 Request a scope check
                 <PiArrowUpRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
+              </MagneticButton>
             </div>
           </div>
 

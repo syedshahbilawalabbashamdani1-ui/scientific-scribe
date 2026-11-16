@@ -9,6 +9,8 @@ import {
   PiWarningCircle,
 } from "react-icons/pi";
 
+import { MagneticButton } from "@/components/magnetic-button";
+
 const initial = {
   identified: 1240,
   removed: 186,
@@ -139,10 +141,10 @@ export function PrismaBuilder() {
           >
             Reset example
           </button>
-          <button type="button" onClick={copy} className="btn btn-outline btn-sm">
+          <MagneticButton asButton onClick={copy} className="btn btn-outline btn-sm">
             <PiCopy className="h-3 w-3" aria-hidden="true" />
             {copyState === "copied" ? "Copied" : "Copy counts"}
-          </button>
+          </MagneticButton>
         </div>
       </div>
 

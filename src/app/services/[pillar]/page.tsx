@@ -12,6 +12,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { CtaBand } from "@/components/cta-band";
 import { FaqList } from "@/components/faq-list";
 import { JsonLd } from "@/components/json-ld";
+import { MagneticButton } from "@/components/magnetic-button";
 import { Reveal } from "@/components/reveal";
 import { site } from "@/lib/site";
 import { getPillar, pillars } from "@/lib/services";
@@ -225,13 +226,14 @@ export default async function PillarPage({
                 If your question is not here, the pillar lead can answer it before
                 you share any files.
               </p>
-              <Link
+              <MagneticButton
                 href="/contact"
-                className="btn btn-outline btn-sm mt-4"
+                className="btn btn-outline btn-sm"
+                wrapperClassName="mt-4 inline-flex"
               >
                 Ask about this pillar
                 <PiArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-              </Link>
+              </MagneticButton>
             </div>
             <FaqList
               faqs={pillar.services.slice(0, 3).flatMap((service) =>

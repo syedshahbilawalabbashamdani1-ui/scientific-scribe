@@ -4,6 +4,7 @@ import { PiArrowUpRight, PiInfo, PiShieldCheck } from "react-icons/pi";
 
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JsonLd } from "@/components/json-ld";
+import { MagneticButton } from "@/components/magnetic-button";
 import { ServiceMatcher } from "@/components/service-matcher";
 import { site } from "@/lib/site";
 import { pillars, researchNeeds, researchStages } from "@/lib/services";
@@ -154,10 +155,14 @@ export default function MatchPage() {
                 A methodologist can read a short brief and name the route. That
                 is the right option when the project crosses pillars.
               </p>
-              <Link href="/contact" className="btn btn-primary btn-sm mt-4">
+              <MagneticButton
+                href="/contact"
+                className="btn btn-primary btn-sm"
+                wrapperClassName="mt-4 inline-flex"
+              >
                 Request a scope check
                 <PiArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-              </Link>
+              </MagneticButton>
             </div>
 
             <div className="grid gap-2 sm:grid-cols-2">

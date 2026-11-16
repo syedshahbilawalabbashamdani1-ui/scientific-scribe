@@ -10,6 +10,8 @@ import {
   PiPaperPlaneTilt,
 } from "react-icons/pi";
 
+import { MagneticButton } from "@/components/magnetic-button";
+
 import { mailto, site } from "@/lib/site";
 import { pillars, researchStages } from "@/lib/services";
 
@@ -112,14 +114,18 @@ export function ContactForm() {
           app did not open, copy the summary and send it directly.
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
-          <button type="button" onClick={copySummary} className="btn btn-primary btn-sm">
+          <MagneticButton
+            asButton
+            onClick={copySummary}
+            className="btn btn-primary btn-sm"
+          >
             <PiCopy className="h-3.5 w-3.5" aria-hidden="true" />
             {copyState === "copied" ? "Copied" : "Copy summary"}
-          </button>
-          <a href={`mailto:${site.email}`} className="btn btn-outline btn-sm">
+          </MagneticButton>
+          <MagneticButton href={`mailto:${site.email}`} className="btn btn-outline btn-sm">
             <PiEnvelopeSimple className="h-3.5 w-3.5" aria-hidden="true" />
             Email directly
-          </a>
+          </MagneticButton>
         </div>
         {copyState === "failed" && (
           <p className="mt-3 text-[11px] text-accent-text">
@@ -314,10 +320,10 @@ export function ContactForm() {
           </Link>
           .
         </p>
-        <button type="submit" className="btn btn-primary">
+        <MagneticButton asButton buttonType="submit" className="btn btn-primary">
           Request a scope check
           <PiPaperPlaneTilt className="h-4 w-4" aria-hidden="true" />
-        </button>
+        </MagneticButton>
       </div>
 
       <p className="mt-3 flex items-center gap-1.5 text-[9.5px] text-quiet">

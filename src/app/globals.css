@@ -3,7 +3,75 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ------------------------------------------------------------------ */
-/* Design tokens — follows Tech_And_Stack.md                           */
+/* Fonts — Neue Montreal, served from /public/fonts                    */
+/* ------------------------------------------------------------------ */
+
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/NeueMontreal-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/NeueMontreal-LightItalic.otf") format("opentype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/NeueMontreal-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/NeueMontreal-Italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/NeueMontreal-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/NeueMontreal-MediumItalic.otf") format("opentype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/NeueMontreal-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("/fonts/NeueMontreal-BoldItalic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ------------------------------------------------------------------ */
+/* Design tokens — ocean-teal palette                                  */
 /* ------------------------------------------------------------------ */
 
 :root {
@@ -137,6 +205,7 @@
     scroll-behavior: smooth;
     scroll-padding-top: calc(var(--header-height) + 24px);
     background: var(--color-background);
+    overflow-x: hidden;
   }
 
   body {
@@ -151,6 +220,8 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     transition: background-color 0.5s ease, color 0.5s ease;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
   }
 
   h1,
@@ -423,6 +494,14 @@
     opacity: 0.72;
   }
 
+  /* Native dropdown menus ignore the translucent field background, so give
+     their options a solid surface that matches the active theme. */
+  .field option,
+  .field optgroup {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+  }
+
   .field:hover {
     background: var(--color-create-surface);
   }
@@ -493,6 +572,141 @@
 
   .no-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* ALPHA Hamburger Navigation & Sub-Menu                              */
+  /* ------------------------------------------------------------------ */
+
+  .nav-toggle {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+
+  .nav-toggle:hover {
+    transform: scale(1.06);
+  }
+
+  .hm {
+    display: block;
+  }
+
+  .hm circle {
+    fill: var(--color-text, currentColor);
+    opacity: 0.55;
+    transition: opacity 0.18s ease;
+  }
+
+  .nav-toggle:hover .hm circle:nth-child(1),
+  .nav-toggle:hover .hm circle:nth-child(3),
+  .nav-toggle:hover .hm circle:nth-child(7),
+  .nav-toggle:hover .hm circle:nth-child(9),
+  .nav-toggle.open .hm circle:nth-child(1),
+  .nav-toggle.open .hm circle:nth-child(3),
+  .nav-toggle.open .hm circle:nth-child(7),
+  .nav-toggle.open .hm circle:nth-child(9) {
+    opacity: 1;
+  }
+
+  .nav-toggle.open .hm circle {
+    opacity: 0.9;
+  }
+
+  .sub-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 1rem;
+    width: min(19rem, calc(100vw - 2rem));
+    border-radius: 1.75rem;
+    border: 1px solid var(--color-nav-border);
+    background: var(--color-surface);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 20px 48px var(--color-shadow);
+    overflow: hidden;
+    padding: 0;
+    z-index: 60;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-8px) scale(0.98);
+    transform-origin: top right;
+    transition: opacity 0.24s ease, transform 0.24s ease, visibility 0.24s ease;
+  }
+
+  .sub-menu.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+
+  .sub-menu-shell {
+    padding: 1rem 0.85rem 0.85rem;
+  }
+
+  .sub-menu-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .sub-menu-divider {
+    height: 1px;
+    background: var(--color-nav-border);
+    margin: 0.6rem 0 0.5rem;
+  }
+
+  .sub-menu-label {
+    padding: 0 0.8rem;
+    font-family: var(--font-mono-stack);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    text-align: left;
+    padding: 0.4rem 0.8rem;
+    font-size: 1.05rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: 0.95rem;
+  }
+
+  .menu-item:hover {
+    background-color: var(--color-create-surface);
+    color: var(--btn-primary-bg);
+    transform: translateX(2px);
+  }
+
+  .menu-item-secondary {
+    justify-content: flex-start;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--color-muted);
+    padding: 0.3rem 0.8rem;
+  }
+
+  .menu-item-secondary:hover {
+    color: var(--color-text);
+    background-color: var(--color-create-surface);
   }
 }
 
@@ -669,11 +883,11 @@ input[type="range"].range:focus-visible {
 
 @media (max-width: 640px) {
   .display {
-    font-size: clamp(2.35rem, 12vw, 3.2rem);
+    font-size: clamp(2.05rem, 10vw, 3.2rem);
   }
 
   .display-sm {
-    font-size: clamp(1.85rem, 9vw, 2.5rem);
+    font-size: clamp(1.75rem, 8.5vw, 2.5rem);
   }
 
   .btn {

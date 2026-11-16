@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useDeferredValue, useState } from "react";
+
+import { MagneticButton } from "@/components/magnetic-button";
 import {
   PiArrowUpRight,
   PiMagnifyingGlass,
@@ -125,8 +127,8 @@ export function ServiceFilter({ pillars }: ServiceFilterProps) {
             point you to the right service.
           </p>
           <div className="mt-4 flex flex-wrap justify-center gap-3">
-            <button
-              type="button"
+            <MagneticButton
+              asButton
               onClick={() => {
                 setQuery("");
                 setActivePillar("all");
@@ -134,11 +136,11 @@ export function ServiceFilter({ pillars }: ServiceFilterProps) {
               className="btn btn-outline btn-sm"
             >
               Clear filters
-            </button>
-            <Link href="/contact" className="btn btn-primary btn-sm">
+            </MagneticButton>
+            <MagneticButton href="/contact" className="btn btn-primary btn-sm">
               Request a scope check
               <PiArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-            </Link>
+            </MagneticButton>
           </div>
         </div>
       ) : (

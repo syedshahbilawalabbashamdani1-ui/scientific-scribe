@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PiArrowLeft, PiArrowUpRight } from "react-icons/pi";
 
+import { MagneticButton } from "@/components/magnetic-button";
 import { pillars } from "@/lib/services";
 
 export const metadata = {
@@ -30,14 +31,14 @@ export default function NotFound() {
             the service index, or use the matcher to find the right scope.
           </p>
           <div className="mt-6 flex flex-wrap gap-2.5">
-            <Link href="/" className="btn btn-primary">
+            <MagneticButton href="/" className="btn btn-primary">
               <PiArrowLeft className="h-4 w-4" aria-hidden="true" />
               Back to home
-            </Link>
-            <Link href="/services" className="btn btn-outline">
+            </MagneticButton>
+            <MagneticButton href="/services" className="btn btn-outline">
               Service index
               <PiArrowUpRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            </MagneticButton>
           </div>
         </div>
 

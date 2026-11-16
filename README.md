@@ -2,7 +2,7 @@
 
 A rebuilt marketing site for Scientific-Scribe, an academic research and publication support practice. The site presents fourteen services across four pillars, with dedicated service pages, a two-step service matcher, a transparent planning estimator, a resource hub, and a written-scope contact flow.
 
-The content and UX follow `Project-Briefing.md`. The visual system follows `Tech_And_Stack.md`: high-contrast black/white themes, signal red `#E8391D`, Neue Montreal with system fallbacks, a frosted-glass header, CSS-variable theming, and reduced-motion support. `Website-Design.md` was intentionally not used.
+The content and UX follow `Project-Briefing.md`. The visual system follows `Tech_And_Stack.md`, adapted to the ocean-teal palette used in the build: high-contrast black/white themes with a `#0077b6` light-theme accent and `#00b4d8` dark-theme accent, self-hosted Neue Montreal (OTF files in `public/fonts`, declared in `globals.css`), a frosted-glass header, CSS-variable theming, and reduced-motion support. `Website-Design.md` was intentionally not used.
 
 ## Stack
 
@@ -26,7 +26,7 @@ npm run start    # serve the production build
 npm run lint
 ```
 
-`RESEND_API_KEY` in `.env.example` is unused by this build. The contact form intentionally composes a `mailto:` message in the visitor's email client rather than posting to a server.
+`RESEND_API_KEY` and `ALLOW_MOCK_EMAIL` in `.env.example` are unused placeholders for this build. The contact form intentionally composes a `mailto:` message in the visitor's email client rather than posting to a server.
 
 ## Before launch
 

@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { PiArrowUpRight, PiCheckCircle } from "react-icons/pi";
 
+import { MagneticButton } from "@/components/magnetic-button";
+
 import { formatPriceRange, pillars, services } from "@/lib/services";
 import { mailto } from "@/lib/site";
 
@@ -206,15 +208,15 @@ export function Estimator({ compact = false }: { compact?: boolean }) {
 
           <fieldset className="mt-6">
             <legend className="field-label">Deadline</legend>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
               {deadlineOptions.map((option) => {
                 const selected = deadline === option.id;
                 return (
                   <label
                     key={option.id}
-                    className={`cursor-pointer border p-2.5 transition-colors ${
+                    className={`cursor-pointer border p-2 text-center transition-colors sm:p-2.5 sm:text-left ${
                       selected
-                        ? "border-ink bg-ink text-white"
+                        ? "border-ink bg-ink text-page"
                         : "border-line hover:bg-tint"
                     }`}
                   >
@@ -226,12 +228,12 @@ export function Estimator({ compact = false }: { compact?: boolean }) {
                       onChange={() => setDeadline(option.id)}
                       className="sr-only"
                     />
-                    <span className="block text-[11.5px] font-medium">
+                    <span className="block text-[11px] font-medium sm:text-[11.5px]">
                       {option.label}
                     </span>
                     <span
-                      className={`mt-0.5 block text-[9px] leading-tight ${
-                        selected ? "text-white/70" : "text-quiet"
+                      className={`mt-0.5 block break-words text-[8.5px] leading-tight sm:text-[9px] ${
+                        selected ? "text-page/70" : "text-quiet"
                       }`}
                     >
                       {option.hint}
@@ -330,13 +332,14 @@ export function Estimator({ compact = false }: { compact?: boolean }) {
           </div>
 
           <div className="mt-7">
-            <a
+            <MagneticButton
               href={mailto(`Quote request: ${service.shortTitle}`, summary)}
               className="btn btn-primary w-full"
+              wrapperClassName="flex w-full"
             >
               Request this quote
               <PiArrowUpRight className="h-4 w-4" aria-hidden="true" />
-            </a>
+            </MagneticButton>
             <p className="mt-2 text-center text-[9.5px] text-white/55">
               Opens your email app with these details.
             </p>

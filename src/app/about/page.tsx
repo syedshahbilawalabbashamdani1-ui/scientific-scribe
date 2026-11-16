@@ -15,6 +15,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { CtaBand } from "@/components/cta-band";
 import { FaqList } from "@/components/faq-list";
 import { JsonLd } from "@/components/json-ld";
+import { MagneticButton } from "@/components/magnetic-button";
 import { Reveal } from "@/components/reveal";
 import { mailto, site } from "@/lib/site";
 
@@ -153,13 +154,13 @@ export default function AboutPage() {
                 is easy.
               </p>
               <div className="mt-6 flex flex-wrap gap-2.5">
-                <Link href="/contact" className="btn btn-primary">
+                <MagneticButton href="/contact" className="btn btn-primary">
                   Request a scope check
                   <PiArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
-                <Link href="#integrity" className="btn btn-outline">
+                </MagneticButton>
+                <MagneticButton href="#integrity" className="btn btn-outline">
                   Read the integrity line
-                </Link>
+                </MagneticButton>
               </div>
             </div>
 
@@ -374,10 +375,14 @@ export default function AboutPage() {
               If your question is about a specific manuscript or dataset, send a
               brief instead.
             </p>
-            <Link href="/contact" className="btn btn-outline btn-sm mt-4">
+            <MagneticButton
+              href="/contact"
+              className="btn btn-outline btn-sm"
+              wrapperClassName="mt-4 inline-flex"
+            >
               Request a scope check
               <PiArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-            </Link>
+            </MagneticButton>
           </div>
           <FaqList faqs={faqs} />
         </div>

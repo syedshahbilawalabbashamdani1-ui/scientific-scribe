@@ -16,6 +16,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { CtaBand } from "@/components/cta-band";
 import { FaqList } from "@/components/faq-list";
 import { JsonLd } from "@/components/json-ld";
+import { MagneticButton } from "@/components/magnetic-button";
 import { Reveal } from "@/components/reveal";
 import { mailto, site } from "@/lib/site";
 import {
@@ -204,14 +205,14 @@ export default async function ServicePage({
               <p className="lede mt-5">{service.summary}</p>
 
               <div className="mt-7 flex flex-wrap gap-2.5">
-                <Link href="/contact" className="btn btn-primary">
+                <MagneticButton href="/contact" className="btn btn-primary">
                   Request a scope check
                   <PiArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
-                <Link href="/estimate" className="btn btn-outline">
+                </MagneticButton>
+                <MagneticButton href="/estimate" className="btn btn-outline">
                   Plan a budget range
                   <PiArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
+                </MagneticButton>
               </div>
 
               <dl className="mt-8 grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-4">
@@ -400,10 +401,14 @@ export default async function ServicePage({
               Straight answers about authorship, guarantees, data, and what is
               out of scope.
             </p>
-            <Link href="/contact" className="btn btn-outline btn-sm mt-4">
+            <MagneticButton
+              href="/contact"
+              className="btn btn-outline btn-sm"
+              wrapperClassName="mt-4 inline-flex"
+            >
               Ask a different question
               <PiArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-            </Link>
+            </MagneticButton>
           </div>
           <FaqList faqs={service.faqs} />
         </div>
@@ -492,13 +497,14 @@ export default async function ServicePage({
               Prefer to send the brief directly? This link opens your email app
               with the service already named.
             </p>
-            <a
+            <MagneticButton
               href={mailto(`Scope check: ${service.title}`, briefBody)}
-              className="btn btn-dark btn-sm shrink-0"
+              className="btn btn-dark btn-sm"
+              wrapperClassName="inline-flex shrink-0"
             >
               Email about this scope
               <PiArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-            </a>
+            </MagneticButton>
           </div>
         </div>
       </section>

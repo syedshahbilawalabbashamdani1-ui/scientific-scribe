@@ -74,7 +74,7 @@ export function PillarConsole() {
               aria-controls={`console-panel-${item.slug}`}
               tabIndex={selected ? 0 : -1}
               onClick={() => setActive(index)}
-              className={`relative flex flex-col items-start gap-1 border-r border-line px-2.5 py-2.5 text-left transition-colors last:border-r-0 sm:px-3 ${
+              className={`relative flex flex-col items-start gap-1 border-r border-line px-2 py-2 text-left transition-colors last:border-r-0 sm:px-3 sm:py-2.5 ${
                 selected
                   ? "bg-ink text-page"
                   : "text-quiet hover:bg-tint hover:text-ink"
@@ -87,7 +87,7 @@ export function PillarConsole() {
               >
                 {item.number}
               </span>
-              <span className="text-[10.5px] font-medium leading-none sm:text-[11.5px]">
+              <span className="w-full truncate text-[10px] font-medium leading-tight sm:text-[11.5px]">
                 {item.shortName}
               </span>
             </button>

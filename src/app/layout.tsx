@@ -3,6 +3,7 @@ import "./globals.css";
 
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { PageFade } from "@/components/page-fade";
 import { ThemeProvider } from "@/components/theme-provider";
 import { site } from "@/lib/site";
 
@@ -49,7 +50,8 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: "/icon.svg",
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    shortcut: "/favicon.svg",
   },
   category: "education",
 };
@@ -98,7 +100,9 @@ export default function RootLayout({
         />
         <ThemeProvider>
           <Header />
-          <main id="main-content">{children}</main>
+          <main id="main-content">
+            <PageFade>{children}</PageFade>
+          </main>
           <Footer />
         </ThemeProvider>
       </body>
